@@ -1,0 +1,62 @@
+R1 Configurations
+en
+conf t
+hostname R1
+int s0/1/0
+ ip add 192.168.1.225 255.255.255.252
+ no sh
+int s0/1/1
+ ip add 192.168.1.229 255.255.255.252
+ no sh
+int g0/0/0
+ ip add 10.0.0.1 255.0.0.0
+ no sh
+router eigrp 1
+ eigrp router-id 1.1.1.1
+ network 192.168.1.224 0.0.0.3
+ network 192.168.1.228 0.0.0.3
+ network 10.0.0.0 0.255.255.255
+ ex
+
+R2 Configurations
+en
+conf t
+hostname R2
+int s0/1/0
+ ip add 192.168.1.226 255.255.255.252
+ no sh
+int g0/0/0
+ ip add 192.168.1.129 255.255.255.192
+ no sh
+int g0/0/1
+ ip add 192.168.1.65 255.255.255.192
+ no sh
+router eigrp 1
+ eigrp router-id 2.2.2.2
+ network 192.168.1.224 0.0.0.3
+ network 192.168.1.232 0.0.0.3
+ network 192.168.1.128 0.0.0.63
+ network 192.168.1.64 0.0.0.63
+ ex
+ 
+R3 Configurations
+en
+conf t
+hostname R3
+int s0/1/0
+ ip add 192.168.1.230 255.255.255.252
+ no sh
+int g0/0/0
+ ip add 192.168.1.193 255.255.255.224
+ no sh
+int g0/0/1
+ ip add 192.168.1.1 255.255.255.192
+ no sh
+router eigrp 1
+ eigrp router-id 3.3.3.3
+ network 192.168.1.228 0.0.0.3
+ network 192.168.1.232 0.0.0.3
+ network 192.168.1.192 0.0.0.31
+ network 192.168.1.0 0.0.0.63
+ ex
+ 
