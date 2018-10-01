@@ -1,0 +1,33 @@
+MainRouter Configurations
+enable
+config terminal
+hostname MainRouter
+int s0/0/0
+ ip add 192.168.1.161 255.255.255.252
+ clock rate 64000
+ no shutdown
+int s0/0/1
+ ip add 192.168.1.165 255.255.255.252
+ clock rate 64000
+ no shutdown
+int s0/1/0
+ ip add 192.168.1.169 255.255.255.252
+ clock rate 64000
+ no shutdown
+int s0/1/1
+ ip add 192.168.1.173 255.255.255.252
+ clock rate 64000
+ no shutdown
+int fa0/0
+ ip add 10.0.0.1 255.0.0.0
+ clock rate 64000
+ no shutdown
+router eigrp 1
+ eigrp router-id 5.5.5.5
+ network 192.168.1.160
+ network 192.168.1.164
+ network 192.168.1.168
+ network 192.168.1.172
+ network 10.0.0.0
+ end
+copy running-config startup-config
