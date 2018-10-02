@@ -1,0 +1,242 @@
+Dev-SubSwitch-1 Configurations
+    enable
+    config terminal
+    hostname Dev-SubSwitch-1
+    vlan 20
+     name VOICE
+     vlan 30
+     name DEV
+     vlan 99
+     name NATIVE
+     exit
+    interface fa0/1
+     switchport mode trunk
+     no shutdown
+     exit
+    interface range fa0/2-24
+     switchport mode access
+     switchport access vlan 30
+     switchport voice vlan 20
+     no shutdown
+     end
+    copy running-config startup-config
+
+
+Dev-SubSwitch-2 Configurations
+    enable
+    config terminal
+    hostname Dev-SubSwitch-2
+    vlan 20
+     name VOICE
+     vlan 30
+     name DEV
+     vlan 99
+     name NATIVE
+     exit
+    interface fa0/1
+     switchport mode trunk
+     switchport trunk native vlan 99
+     no shutdown
+     exit
+    interface range fa0/2-24
+     switchport mode access
+     switchport access vlan 30
+     switchport voice vlan 20
+     no shutdown
+     end
+    copy running-config startup-config
+
+
+Flr3-Router Configurations
+    enable
+    config terminal
+    hostname Flr3-Router
+    int fa0/0
+     ip address 20.0.0.1 255.0.0.0
+     no shutdown
+     exit
+    interface s0/0/0
+     ip address 192.168.1.170 255.255.255.252
+     clock rate 64000
+     no shutdown
+     exit
+    interface s0/1/0
+     ip address 192.168.1.177 255.255.255.252
+     clock rate 64000
+     no shutdown
+     exit
+    interface s0/1/1
+     ip address 192.168.1.181 255.255.255.252
+     clock rate 64000
+     no shutdown
+     exit
+    router eigrp 1
+     eigrp router-id 3.3.3.3
+     network 192.168.2.0
+     network 192.168.1.168
+     network 192.168.1.176
+     network 192.168.1.180
+     network 20.0.0.0
+     end
+    copy running-config startup-config
+    
+    
+Dev-SubRouter-1 Configurations
+    enable
+    config terminal
+    hostname Dev-SubRouter-1
+    interface fa0/0
+     no shutdown
+     exit
+    interface fa0/0.30
+     encapsulation dot1Q 30
+     ip address 192.168.1.1 255.255.255.224
+     exit
+    interface fa0/0.20
+     encapsulation dot1Q 20
+     ip address 192.168.2.33 255.255.255.248
+     exit
+    interface fa0/0.99
+     encapsulation dot1Q 99 native
+     exit
+    interface s0/0/0
+     ip address 192.168.1.178 255.255.255.252
+     no shutdown
+     exit
+    ip dhcp excluded-address 192.168.1.1
+    ip dhcp excluded-address 192.168.2.33
+    ip dhcp pool DEVFLR3-1
+     network 192.168.1.0 255.255.255.224
+     default-router 192.168.1.1
+     exit
+    ip dhcp pool VOICE
+     network 192.168.2.32 255.255.255.248
+     default-router 192.168.2.33
+     option 150 ip 192.168.2.33
+     exit
+    router eigrp 1
+     eigrp router-id 6.6.6.6
+     network 192.168.1.0
+     network 192.168.2.0
+     network 192.168.1.176
+     exit
+    dial-peer voice 1 voip
+     destination-pattern 1...
+     session target ipv4:192.168.1.162
+    dial-peer voice 2 voip
+     destination-pattern 2...
+     session target ipv4:192.168.1.166
+    dial-peer voice 3 voip
+     destination-pattern 301.
+     session target ipv4:192.168.1.182
+    dial-peer voice 4 voip
+     destination-pattern 4...
+     session target ipv4:192.168.1.174
+     end
+    telephony-service
+     max-dn 8
+     max-ephones 8
+     ip source-address 192.168.2.33 port 2000
+     ephone-dn 1
+     number 3001
+     ephone-dn 2
+     number 3002
+     ephone-dn 3
+     number 3003
+     ephone-dn 4
+     number 3004
+     ephone-dn 5
+     number 3005
+     ephone-dn 6
+     number 3006
+     ephone-dn 7
+     number 3007
+     ephone-dn 8
+     number 3008
+     exit
+    ephone 1
+     button 1:1
+    copy running-config startup-config
+    
+    
+Dev-SubRouter-2 Configurations
+    enable
+    config terminal
+    hostname Dev-SubRouter-2
+    interface fa0/0
+     no shutdown
+     exit
+    interface fa0/0.30
+     encapsulation dot1Q 30
+     ip address 192.168.1.33 255.255.255.224
+     exit
+    interface fa0/0.20
+     encapsulation dot1Q 20
+     ip address 192.168.2.41 255.255.255.248
+     exit
+    interface fa0/0.99
+     encapsulation dot1Q 99 native
+     exit
+    interface s0/0/0
+     ip address 192.168.1.182 255.255.255.252
+     no shutdown
+     exit
+    ip dhcp excluded-address 192.168.1.33
+    ip dhcp excluded-address 192.168.2.41
+    ip dhcp pool DEVFLR3-2
+     network 192.168.1.33 255.255.255.224
+     default-router 192.168.1.33
+     exit
+    ip dhcp pool VOICE
+     network 192.168.2.40 255.255.255.248
+     default-router 192.168.2.41
+     option 150 ip 192.168.2.41
+     exit
+    router eigrp 1
+     eigrp router-id 7.7.7.7
+     network 192.168.1.0
+     network 192.168.2.0
+     network 192.168.1.180
+     exit
+    dial-peer voice 1 voip
+     destination-pattern 1...
+     session target ipv4:192.168.1.162
+     exit
+    dial-peer voice 2 voip
+     destination-pattern 2...
+     session target ipv4:192.168.1.166
+     exit
+    dial-peer voice 3 voip
+     destination-pattern 3...
+     session target ipv4:192.168.1.178
+     exit
+    dial-peer voice 4 voip
+     destination-pattern 4...
+     session target ipv4:192.168.1.174
+     exit
+    telephony-service
+     max-dn 8
+     max-ephones 8
+     ip source-address 192.168.2.41 port 2000
+     ephone-dn 1
+     number 3011
+     ephone-dn 2
+     number 3012
+     ephone-dn 3
+     number 3013
+     ephone-dn 4
+     number 3014
+     ephone-dn 5
+     number 3015
+     ephone-dn 6
+     number 3016
+     ephone-dn 7
+     number 3017
+     ephone-dn 8
+     number 3018
+     exit
+    ephone 1
+     button 1:1
+    copy running-config startup-config
+    
+    

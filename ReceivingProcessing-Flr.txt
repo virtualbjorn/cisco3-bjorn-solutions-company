@@ -1,7 +1,7 @@
-Flr2-Switch Configurations
+Flr1-Switch Configurations
 enable
 config terminal
-hostname Flr2-Switch
+hostname Flr1-Switch
 vlan 10
  name DATA
  vlan 20
@@ -24,75 +24,83 @@ interface range fa0/2-24
  end
 copy running-config startup-config
 
-Flr2-Router Configurations
+Flr1-Router Configurations
 enable
 config terminal
-hostname Flr2-Router
+hostname Flr1-Router
 interface fa0/0
  no shutdown
  exit
 interface fa0/0.10
  encapsulation dot1Q 10
- ip address 192.168.1.129 255.255.255.224
+ ip address 192.168.1.65 255.255.255.224
  exit
 interface fa0/0.20
  encapsulation dot1Q 20
- ip address 192.168.2.17 255.255.255.240
+ ip address 192.168.2.1 255.255.255.240
  exit
 interface fa0/0.99
  encapsulation dot1Q 99 native
  exit
 interface s0/0/0
- ip address 192.168.1.166 255.255.255.252
+ ip address 192.168.1.162 255.255.255.252
  no shutdown
  exit
-ip dhcp excluded-address 192.168.1.129
-ip dhcp excluded-address 192.168.2.17
-ip dhcp pool DATAFLR2
- network 192.168.1.128 255.255.255.224
- default-router 192.168.1.129
+ip dhcp excluded-address 192.168.1.65
+ip dhcp excluded-address 192.168.2.1 192.168.2.2
+ip dhcp pool DATAFLR1
+ network 192.168.1.64 255.255.255.224
+ default-router 192.168.1.65
  exit
 ip dhcp pool VOICE
- network 192.168.2.16 255.255.255.240
- default-router 192.168.2.17
- option 150 ip 192.168.2.17
+ network 192.168.2.0 255.255.255.240
+ default-router 192.168.2.1
+ option 150 ip 192.168.2.1
  exit
 telephony-service
  max-dn 8
  max-ephones 8
- ip source-address 192.168.2.17 port 2000
+ ip source-address 192.168.2.1 port 2000
  ephone-dn 1
- number 2001
+ number 1001
  ephone-dn 2
- number 2002
+ number 1002
  ephone-dn 3
- number 2003
+ number 1003
  ephone-dn 4
- number 2004
+ number 1004
  ephone-dn 5
- number 2005
+ number 1005
  ephone-dn 6
- number 2006
+ number 1006
  ephone-dn 7
- number 2007
+ number 1007
  ephone-dn 8
- number 2008
+ number 1008
  exit
 ephone 1
  button 1:1
 router eigrp 1
- eigrp router-id 2.2.2.2
+ eigrp router-id 1.1.1.1
  network 192.168.1.64
  network 192.168.2.0
  network 192.168.1.160
  exit
 dial-peer voice 1 voip
- destination-pattern 1...
- session target ipv4:192.168.1.162
- destination-pattern 3...
- session-target ipv4:192.168.1.170
+ destination-pattern 2...
+ session target ipv4:192.168.1.166
+ exit
+dial-peer voice 2 voip
+ destination-pattern 300.
+ session target ipv4:192.168.1.178
+ exit
+dial-peer voice 3 voip
+ destination-pattern 301.
+ session target ipv4:192.168.1.182
+ exit
+dial-peer voice 4 voip
  destination-pattern 4...
- session-target ipv4:192.168.1.174
+ session target ipv4:192.168.1.174
  end
 copy running-config startup-config
 
