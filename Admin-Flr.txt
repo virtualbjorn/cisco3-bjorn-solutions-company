@@ -1,7 +1,7 @@
-Flr1-Switch Configurations
+Flr4-Switch Configurations
  enable
  config terminal
- hostname Flr1-Switch
+ hostname Flr4-Switch
  vlan 10
   name DATA
   vlan 20
@@ -25,48 +25,48 @@ Flr1-Switch Configurations
  copy running-config startup-config
  
  
-Flr1-Router Configurations
+Flr4-Router Configurations
  enable
  config terminal
- hostname Flr1-Router
+ hostname Flr4-Router
  interface fa0/0
   no shutdown
   exit
  interface fa0/0.10
   encapsulation dot1Q 10
-  ip address 192.168.1.65 255.255.255.224
+  ip address 192.168.1.129 255.255.255.224
   exit
  interface fa0/0.20
   encapsulation dot1Q 20
-  ip address 192.168.2.1 255.255.255.240
+  ip address 192.168.2.49 255.255.255.240
   exit
  interface fa0/0.99
   encapsulation dot1Q 99 native
   exit
  interface s0/0/0
-  ip address 192.168.1.162 255.255.255.252
+  ip address 192.168.1.166 255.255.255.252
   no shutdown
   exit
- ip dhcp excluded-address 192.168.1.65
- ip dhcp excluded-address 192.168.2.1 192.168.2.2
- ip dhcp pool DATAFLR1
-  network 192.168.1.64 255.255.255.224
-  default-router 192.168.1.65
+ ip dhcp excluded-address 192.168.1.129
+ ip dhcp excluded-address 192.168.2.49
+ ip dhcp pool DATAFlr4
+  network 192.168.1.128 255.255.255.224
+  default-router 192.168.1.129
   exit
  ip dhcp pool VOICE
-  network 192.168.2.0 255.255.255.240
-  default-router 192.168.2.1
-  option 150 ip 192.168.2.1
+  network 192.168.2.48 255.255.255.240
+  default-router 192.168.2.49
+  option 150 ip 192.168.2.49
   exit
  router eigrp 1
-  eigrp router-id 1.1.1.1
-  network 192.168.1.64
+  eigrp router-id 4.4.4.4
+  network 192.168.1.128
   network 192.168.2.0
   network 192.168.1.160
   exit
  dial-peer voice 1 voip
-  destination-pattern 2...
-  session target ipv4:192.168.1.166
+  destination-pattern 1...
+  session target ipv4:192.168.1.162
   exit
  dial-peer voice 2 voip
   destination-pattern 300.
@@ -83,26 +83,27 @@ Flr1-Router Configurations
  telephony-service
   max-dn 8
   max-ephones 8
-  ip source-address 192.168.2.1 port 2000
+  ip source-address 192.168.2.49 port 2000
   ephone-dn 1
-  number 1001
+  number 4001
   ephone-dn 2
-  number 1002
+  number 4002
   ephone-dn 3
-  number 1003
+  number 4003
   ephone-dn 4
-  number 1004
+  number 4004
   ephone-dn 5
-  number 1005
+  number 4005
   ephone-dn 6
-  number 1006
+  number 4006
   ephone-dn 7
-  number 1007
+  number 4007
   ephone-dn 8
-  number 1008
+  number 4008
   exit
- ephone 1
+ ephone 1 #used for IP Phones
   button 1:1
+  exit
  copy running-config startup-config
  
  
