@@ -1,7 +1,64 @@
-Flr4-Switch Configurations
+Admin-CoreSwitch Configurations
  enable
  config terminal
- hostname Flr4-Switch
+ hostname Admin-CoreSwitch
+ vlan 10
+  name DATA
+  vlan 20
+  name VOICE
+  vlan 30
+  name DEV
+  vlan 99
+  name NATIVE
+  exit
+ interface range fa0/1-5
+  switchport trunk encapsulation dot1Q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  no shutdown
+  exit
+ interface range fa0/3-5
+  shutdown
+ interface range fa0/6-24
+  switchport mode access
+  switchport access vlan 10
+  switchport voice vlan 20
+  shutdown
+  end
+ copy running-config startup-config
+ 
+ 
+Admin-SubSwitch-1 Configurations
+ enable
+ config terminal
+ hostname Admin-SubSwitch-1
+ vlan 10
+  name DATA
+  vlan 20
+  name VOICE
+  vlan 30
+  name DEV
+  vlan 99
+  name NATIVE
+  exit
+ interface fa0/1
+  switchport mode trunk
+  switchport trunk native vlan 99
+  no shutdown
+  exit
+ interface range fa0/2-24
+  switchport mode access
+  switchport access vlan 10
+  switchport voice vlan 20
+  no shutdown
+  end
+ copy running-config startup-config
+
+
+Admin-SubSwitch-2 Configurations
+ enable
+ config terminal
+ hostname Admin-SubSwitch-2
  vlan 10
   name DATA
   vlan 20
@@ -24,8 +81,8 @@ Flr4-Switch Configurations
   end
  copy running-config startup-config
  
- 
-Flr4-Router Configurations
+
+Admin-Router Configurations
  enable
  config terminal
  hostname Flr4-Router
