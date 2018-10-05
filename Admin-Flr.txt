@@ -17,7 +17,7 @@ Admin-CoreSwitch Configurations
   switchport trunk native vlan 99
   no shutdown
   exit
- interface range fa0/3-5
+ interface range fa0/4-5
   shutdown
  interface range fa0/6-24
   switchport mode access
@@ -101,7 +101,7 @@ Admin-Router Configurations
   encapsulation dot1Q 99 native
   exit
  interface s0/0/0
-  ip address 192.168.1.166 255.255.255.252
+  ip address 192.168.1.174 255.255.255.252
   no shutdown
   exit
  ip dhcp excluded-address 192.168.1.129
@@ -126,16 +126,12 @@ Admin-Router Configurations
   session target ipv4:192.168.1.162
   exit
  dial-peer voice 2 voip
-  destination-pattern 300.
-  session target ipv4:192.168.1.178
+  destination-pattern 2...
+  session target ipv4:192.168.1.166
   exit
  dial-peer voice 3 voip
-  destination-pattern 301.
-  session target ipv4:192.168.1.182
-  exit
- dial-peer voice 4 voip
-  destination-pattern 4...
-  session target ipv4:192.168.1.174
+  destination-pattern 3...
+  session target ipv4:192.168.1.170
   exit
  telephony-service
   max-dn 8

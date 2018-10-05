@@ -68,13 +68,9 @@ Flr2-Router Configurations
   destination-pattern 1...
   session target ipv4:192.168.1.162
   exit
- dial-peer voice 2 voip
-  destination-pattern 300.
-  session target ipv4:192.168.1.178
-  exit
  dial-peer voice 3 voip
-  destination-pattern 301.
-  session target ipv4:192.168.1.182
+  destination-pattern 3...
+  session target ipv4:192.168.1.170
   exit
  dial-peer voice 4 voip
   destination-pattern 4...
