@@ -20,7 +20,6 @@ int s0/1/1
  no shutdown
 int fa0/0
  ip add 10.0.0.1 255.0.0.0
- clock rate 64000
  no shutdown
 router eigrp 1
  eigrp router-id 5.5.5.5
@@ -29,5 +28,6 @@ router eigrp 1
  network 192.168.1.168
  network 192.168.1.172
  network 10.0.0.0
+ network 10.128.0.0
  end
 copy running-config startup-config

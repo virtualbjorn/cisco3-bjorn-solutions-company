@@ -82,10 +82,13 @@ Admin-SubSwitch-2 Configurations
  copy running-config startup-config
  
 
-Admin-Router Configurations
+Flr4-Router Configurations
  enable
  config terminal
  hostname Flr4-Router
+ access-list 110 deny icmp 192.168.1.64 0.0.0.31 192.168.1.128 0.0.0.31 echo
+ access-list 110 deny icmp 192.168.1.96 0.0.0.31 192.168.1.128 0.0.0.31 echo
+ access-list 110 permit ip any any
  interface fa0/0
   no shutdown
   exit
@@ -108,6 +111,7 @@ Admin-Router Configurations
  ip dhcp excluded-address 192.168.2.49
  ip dhcp pool DATAFlr4
   network 192.168.1.128 255.255.255.224
+  dns-server 10.0.0.2
   default-router 192.168.1.129
   exit
  ip dhcp pool VOICE
@@ -120,6 +124,8 @@ Admin-Router Configurations
   network 192.168.1.128
   network 192.168.2.0
   network 192.168.1.160
+  network 10.0.0.0
+  network 10.128.0.0
   exit
  dial-peer voice 1 voip
   destination-pattern 1...

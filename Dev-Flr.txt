@@ -81,6 +81,13 @@ Flr3-Router Configurations
  enable
  config terminal
  hostname Flr3-Router
+ access-list 110 deny icmp 192.168.1.64 0.0.0.31 192.168.1.0 0.0.0.63 echo
+ access-list 110 deny icmp 192.168.1.96 0.0.0.31 192.168.1.0 0.0.0.63 echo
+ access-list 110 deny icmp 192.168.1.128 0.0.0.31 192.168.1.0 0.0.0.63 echo
+ access-list 110 permit ip any any
+ access-list 111 permit tcp 192.168.1.0 0.0.0.63 20.0.0.0 0.255.255.255 eq ftp
+ access-list 111 permit icmp 192.168.1.0 0.0.0.63 20.0.0.0 0.255.255.255 echo
+ access-list 111 deny tcp any any eq ftp
  interface fa0/0
   no shutdown
   exit
@@ -111,10 +118,11 @@ Flr3-Router Configurations
   network 192.168.1.168
   network 20.0.0.0
   exit
- ip dhcp excluded-address 192.168.1.1
+ ip dhcp excluded-address 192.168.1.1 192.168.1.3
  ip dhcp excluded-address 192.168.2.33
  ip dhcp pool DEVFLR3
   network 192.168.1.0 255.255.255.192
+  dns-server 10.0.0.2
   default-router 192.168.1.1
   exit
  ip dhcp pool VOICE

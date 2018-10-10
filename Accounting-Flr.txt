@@ -47,10 +47,11 @@ Flr2-Router Configurations
   ip address 192.168.1.166 255.255.255.252
   no shutdown
   exit
- ip dhcp excluded-address 192.168.1.97
+ ip dhcp excluded-address 192.168.1.97 192.168.1.99
  ip dhcp excluded-address 192.168.2.17
  ip dhcp pool DATAFLR2
   network 192.168.1.96 255.255.255.224
+  dns-server 10.0.0.2
   default-router 192.168.1.97
   exit
  ip dhcp pool VOICE
