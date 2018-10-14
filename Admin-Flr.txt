@@ -6,8 +6,6 @@ Admin-CoreSwitch Configurations
   name DATA
   vlan 20
   name VOICE
-  vlan 30
-  name DEV
   vlan 99
   name NATIVE
   exit
@@ -36,8 +34,6 @@ Admin-SubSwitch-1 Configurations
   name DATA
   vlan 20
   name VOICE
-  vlan 30
-  name DEV
   vlan 99
   name NATIVE
   exit
