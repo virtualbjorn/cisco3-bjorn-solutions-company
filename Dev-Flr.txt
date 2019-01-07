@@ -84,6 +84,8 @@ Flr3-Router Configurations
  access-list 110 deny icmp 192.168.1.64 0.0.0.31 192.168.1.0 0.0.0.63 echo
  access-list 110 deny icmp 192.168.1.96 0.0.0.31 192.168.1.0 0.0.0.63 echo
  access-list 110 deny icmp 192.168.1.128 0.0.0.31 192.168.1.0 0.0.0.63 echo
+ access-list 110 deny icmp 192.168.1.201 0.0.0.3 192.168.1.0 0.0.0.63 echo
+ access-list 110 deny icmp 172.168.0.1 0.0.0.255 192.168.1.0 0.0.0.63 echo
  access-list 110 permit ip any any
  access-list 111 permit tcp 192.168.1.0 0.0.0.63 20.0.0.0 0.255.255.255 eq ftp
  access-list 111 permit icmp 192.168.1.0 0.0.0.63 20.0.0.0 0.255.255.255 echo
@@ -93,6 +95,7 @@ Flr3-Router Configurations
   exit
  interface fa0/0.30
   encapsulation dot1Q 30
+  ip access-group 110 out
   ip address 192.168.1.1 255.255.255.192
   exit
  interface fa0/0.20
@@ -102,13 +105,26 @@ Flr3-Router Configurations
  interface fa0/0.99
   encapsulation dot1Q 99 native
   exit
- int fa0/1
+ interface fa0/1
+  ip access-group 111 out
   ip address 20.0.0.1 255.0.0.0
   no shutdown
   exit
  interface s0/0/0
-  ip address 192.168.1.170 255.255.255.252
+  ip address 192.168.1.166 255.255.255.252
   clock rate 64000
+  no shutdown
+  exit
+ interface s0/0/1
+  ip address 192.168.1.174 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/0
+  ip address 192.168.1.181 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/1
+  ip address 192.168.1.193 255.255.255.252
   no shutdown
   exit
  router eigrp 1
@@ -132,13 +148,13 @@ Flr3-Router Configurations
   exit
  dial-peer voice 1 voip
   destination-pattern 1...
-  session target ipv4:192.168.1.162
+  session target ipv4:192.168.1.173
  dial-peer voice 2 voip
   destination-pattern 2...
-  session target ipv4:192.168.1.166
+  session target ipv4:192.168.1.165
  dial-peer voice 4 voip
   destination-pattern 4...
-  session target ipv4:192.168.1.174
+  session target ipv4:192.168.1.182
   exit
  telephony-service
   max-dn 8
@@ -161,8 +177,9 @@ Flr3-Router Configurations
   ephone-dn 8
   number 3008
   exit
- ephone 1
-  button 1:1
+telephony-service
+  auto assign 1 to 8
+  end
  copy running-config startup-config
  
  

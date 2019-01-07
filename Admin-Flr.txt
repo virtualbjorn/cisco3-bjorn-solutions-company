@@ -84,12 +84,15 @@ Flr4-Router Configurations
  hostname Flr4-Router
  access-list 110 deny icmp 192.168.1.64 0.0.0.31 192.168.1.128 0.0.0.31 echo
  access-list 110 deny icmp 192.168.1.96 0.0.0.31 192.168.1.128 0.0.0.31 echo
+ access-list 110 deny icmp 192.168.1.200 0.0.0.3 192.168.1.128 0.0.0.31 echo
+ access-list 110 deny icmp 172.168.0.1 0.0.0.255 192.168.1.128 0.0.0.31 echo
  access-list 110 permit ip any any
  interface fa0/0
   no shutdown
   exit
  interface fa0/0.10
   encapsulation dot1Q 10
+  ip access-group 110 out
   ip address 192.168.1.129 255.255.255.224
   exit
  interface fa0/0.20
@@ -100,7 +103,19 @@ Flr4-Router Configurations
   encapsulation dot1Q 99 native
   exit
  interface s0/0/0
-  ip address 192.168.1.174 255.255.255.252
+  ip address 192.168.1.162 255.255.255.252
+  no shutdown
+  exit
+ interface s0/0/1
+  ip address 192.168.1.178 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/0
+  ip address 192.168.1.182 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/1
+  ip address 192.168.1.197 255.255.255.252
   no shutdown
   exit
  ip dhcp excluded-address 192.168.1.129
@@ -125,15 +140,15 @@ Flr4-Router Configurations
   exit
  dial-peer voice 1 voip
   destination-pattern 1...
-  session target ipv4:192.168.1.162
+  session target ipv4:192.168.1.161
   exit
  dial-peer voice 2 voip
   destination-pattern 2...
-  session target ipv4:192.168.1.166
+  session target ipv4:192.168.1.177
   exit
  dial-peer voice 3 voip
   destination-pattern 3...
-  session target ipv4:192.168.1.170
+  session target ipv4:192.168.1.181
   exit
  telephony-service
   max-dn 8
@@ -156,9 +171,9 @@ Flr4-Router Configurations
   ephone-dn 8
   number 4008
   exit
- ephone 1 #used for IP Phones
-  button 1:1
-  exit
+telephony-service
+  auto assign 1 to 8
+  end
  copy running-config startup-config
  
  

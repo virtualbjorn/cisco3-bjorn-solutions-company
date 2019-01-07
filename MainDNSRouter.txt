@@ -1,21 +1,21 @@
 Main-Router Configurations
 enable
 config terminal
-hostname Main-Router
+hostname Main-DNS-Router
 interface s0/0/0
- ip address 192.168.1.161 255.255.255.252
+ ip address 192.168.1.186 255.255.255.252
  clock rate 64000
  no shutdown
 interface s0/0/1
- ip address 192.168.1.165 255.255.255.252
+ ip address 192.168.1.190 255.255.255.252
  clock rate 64000
  no shutdown
 interface s0/1/0
- ip address 192.168.1.169 255.255.255.252
+ ip address 192.168.1.194 255.255.255.252
  clock rate 64000
  no shutdown
 interface s0/1/1
- ip address 192.168.1.173 255.255.255.252
+ ip address 192.168.1.198 255.255.255.252
  clock rate 64000
  no shutdown
 interface fa0/0
@@ -30,3 +30,4 @@ router eigrp 1
  network 10.0.0.0
  end
 copy running-config startup-config
+

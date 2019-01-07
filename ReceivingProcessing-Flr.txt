@@ -42,7 +42,19 @@ Flr1-Router Configurations
   encapsulation dot1Q 99 native
   exit
  interface s0/0/0
-  ip address 192.168.1.162 255.255.255.252
+  ip address 192.168.1.161 255.255.255.252
+  no shutdown
+  exit
+ interface s0/0/1
+  ip address 192.168.1.169 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/0
+  ip address 192.168.1.173 255.255.255.252
+  no shutdown
+  exit
+ interface s0/1/1
+  ip address 192.168.1.185 255.255.255.252
   no shutdown
   exit
  ip dhcp excluded-address 192.168.1.65 192.168.1.67
@@ -65,15 +77,15 @@ Flr1-Router Configurations
   exit
  dial-peer voice 2 voip
   destination-pattern 2...
-  session target ipv4:192.168.1.166
+  session target ipv4:192.168.1.165
   exit
  dial-peer voice 3 voip
   destination-pattern 3...
-  session target ipv4:192.168.1.170
+  session target ipv4:192.168.1.174
   exit
  dial-peer voice 4 voip
   destination-pattern 4...
-  session target ipv4:192.168.1.174
+  session target ipv4:192.168.1.162
   exit
  telephony-service
   max-dn 8
@@ -96,8 +108,9 @@ Flr1-Router Configurations
   ephone-dn 8
   number 1008
   exit
- ephone 1
-  button 1:1
+telephony-service
+  auto assign 1 to 8
+  end
  copy running-config startup-config
  
  
